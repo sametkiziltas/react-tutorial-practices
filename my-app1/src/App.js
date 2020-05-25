@@ -9,7 +9,7 @@ const scaleNames = {
 };
 
 function BoilingVerdict(props) {
-  if (props.celcius >= 100) {
+  if (props.celsius >= 100) {
     return <p>Su Kaynıyor.</p>;
   }
   return <p>Su Kaynamaz.</p>;
