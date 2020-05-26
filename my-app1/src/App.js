@@ -9,40 +9,65 @@ function FancyBorder(props) {
   );
 }
 
-function WelcomeDialog(props) {
+function Dialog(props) {
   return (
-    <FancyBorder color="red">
-      <h1 className="Dialog-title">Welcome {props.name}</h1>
-      <p className="Dialog-message">Thank you for visiting our App !</p>
+    <FancyBorder color="blue">
+      <h1 className="Dialog-title">{props.title}</h1>
+      <p className="Dialog-message">{props.message}</p>
+      {props.children}
     </FancyBorder>
   );
 }
 
-function Contacts() {
-  return <div className="Contacts"></div>;
-}
-
-function Chat() {
-  return <div className="Chat"></div>;
-}
-
-function SplitPane(props) {
+function WelcomeDialog(props) {
   return (
-    <div className="SplitPane">
-      <div className="SplitPane-left">{props.left}</div>
-      <div className="SplitPane-right">{props.right}</div>
-    </div>
+    <Dialog
+      title={"Hoşgeldin " + props.name}
+      message="Uzay aracımızı ziyaret ettiğiniz için teşekkür ederiz!"
+    />
   );
 }
 
+class SignUpDialog extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
+    this.state = { login: "" };
+  }
+
+  render() {
+    return (
+      <Dialog title="Mars Keşif Programı" message="Size nasıl başvurabiliriz?">
+        <input 
+          value={this.state.login}
+          onChange={this.handleChange} 
+        />
+        <button 
+          onClick={this.handleSignUp}
+        >Beni kaydet!</button>
+      </Dialog>
+    );
+  }
+
+  handleChange(e) {
+    this.setState({ login: e.target.value });
+  }
+
+  handleSignUp() {
+    alert(`Welcome aboard, ${this.state.login}!`);
+  }
+}
 class App extends React.Component {
   render() {
     const name = "Samet";
     return (
       <div className="App">
         <header className="App-header">
+
           <WelcomeDialog name={name} />
-          <SplitPane left={<Contacts />} right={<Chat />} />
+          <SignUpDialog></SignUpDialog>
+          
         </header>
       </div>
     );
